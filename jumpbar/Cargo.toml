@@ -1,0 +1,27 @@
+[package]
+name = "jumpbar"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+windows = { version = "0.58", features = [
+    "Win32_Foundation",
+    "Win32_UI_WindowsAndMessaging",
+    "Win32_UI_Input_KeyboardAndMouse",
+    "Win32_System_Threading",
+    "Win32_System_LibraryLoader",       # GetModuleHandleW 必需
+    "Win32_System_Com",          # 新增：CoCreateInstance / CoInitializeEx
+    "Win32_System_Variant",      # 新增：VARIANT
+    "Win32_UI_Shell",            # 新增：IShellWindows / IWebBrowser2 / ShellWindows
+    "Win32_System_Console",   # 新增：GetConsoleWindow / GetConsoleProcessList
+] }
+
+[profile.release]
+codegen-units = 1
+lto = true
+opt-level = "s"
+panic = "abort"
+strip = true
+
+[lints.rust]
+unsafe_op_in_unsafe_fn = "allow"
