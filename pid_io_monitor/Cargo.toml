@@ -1,0 +1,26 @@
+[package]
+name = "pid_io_monitor"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.80"
+
+[dependencies]
+# 锁定版本：SPEC 要求 ferrisetw = 1.2.0
+ferrisetw = "=1.2.0"
+# 必须与 ferrisetw 1.2.0 传递依赖的 windows 版本一致，否则 GUID 类型不匹配
+windows = { version = "0.57", features = [
+    "Win32_Foundation",
+    "Win32_Storage_FileSystem",
+    "Win32_System_Console",
+    "Win32_System_SystemInformation",
+    "Win32_System_Threading",
+    "Win32_UI_Shell",
+    "Win32_UI_WindowsAndMessaging",
+] }
+
+[profile.release]
+codegen-units = 1
+lto = true
+opt-level = "s"
+panic = "abort"
+strip = true
